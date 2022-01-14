@@ -84,7 +84,7 @@ const tabs = document.querySelectorAll('[data-target]'),
 
             tabsContent.forEach(tabContent =>{
                 tabContent.classList.remove('qualification__active')
-            })
+            })    
   
             target.classList.add('qualification__active')
   
@@ -106,8 +106,8 @@ const tabs = document.querySelectorAll('[data-target]'),
 const modalViews = document.querySelectorAll('.services__modal'),
         modalBtns=document.querySelectorAll('.services__button'),
         modalCloses=document.querySelectorAll('.services__modal-close')
-
-
+        
+  
         let modal = function(modalClick){
             modalViews[modalClick].classList.add('active-modal')
         }
@@ -118,33 +118,48 @@ const modalViews = document.querySelectorAll('.services__modal'),
             })
         })
 
+        
+
+      window.onclick = function(event) {            
+        modalViews.forEach((modalview) => {
+            if (event.target == modalview) {   
+                modalview.classList.remove('active-modal')    
+                //document.querySelector('.services__modal').classList.remove('active-modal')
+            }
+          })
+          }
+       
+
+
         modalCloses.forEach((modalclose) => {
-            modalclose.addEventListener('click', () => {
+            modalclose.addEventListener('click',()=> {
                 modalViews.forEach((modalview) => {
-                   modalview.classList.remove('active-modal')
+                  modalview.classList.remove('active-modal')
                 })
             })
-
+            
         })
-
-
+       
         /*=============================Scroll section active links==============================*/
 
         const sections = document.querySelectorAll('section[id]')
 
         function scrollActive(){
-            const scrollY = Window.pageYoffset
+            const scrollY = window.pageYOffset
 
             sections.forEach(current => {
                 const sectionHeight = current.offsetHeight
                 const sectionTop = current.offsetTop-50;
                 const sectionId = current.getAttribute('id')
 
-                
-
+        //alert('scrollY : ' + scrollY + 'sectionHeight : ' +  sectionHeight + 'sectionTop: ' + sectionTop + 'sectionId: ' + sectionId)
                 if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
+                   // alert('if : '+ sectionHeight +'  '+ sectionTop+'  ' + sectionId)
+
                     document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link')
                 }else{
+                   // alert('else : '+ sectionHeight +'  '+ sectionTop+'  ' + sectionId)
+
                     document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active-link')
                 }
               
@@ -221,3 +236,20 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-icon', getCurrentIcon)
     
 })
+
+
+/*========================================Contact Form===================================*/
+  
+function triggermail(){
+
+    var tempParam={ 
+        to_name:document.getElementById('name').value,
+        from_name:document.getElementById('email').value,
+        message:document.getElementById('msg').value
+    };
+
+
+         emailjs.send("gmail","mytemplate",tempParam);
+        
+}
+
